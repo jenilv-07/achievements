@@ -4,16 +4,33 @@
 # My goal is to integrate robust security measures within the development lifecycle, ensuring resilient and secure applications for all my clients.
 # - Anubhav Gain <iamanubhavgain@gmail.com>
 
+generate_commit_message() {
+    ADJECTIVES=("meticulously crafted" "fastidiously curated" "judiciously constructed" "expertly engineered" "painstakingly honed")
+    NOUNS=("commit message" "contribution" "iteration" "endeavor" "undertaking")
+    PURPOSES=("to encapsulate the essence of the impending changes" "to capture the quintessence of the forthcoming updates" "to epitomize the forthcoming alterations" "to embody the imminent modifications" "to personify the upcoming revisions")
+
+    ADJECTIVE=${ADJECTIVES[$RANDOM % ${#ADJECTIVES[@]}]}
+    NOUN=${NOUNS[$RANDOM % ${#NOUNS[@]}]}
+    PURPOSE=${PURPOSES[$RANDOM % ${#PURPOSES[@]}]}
+
+    TIMESTAMP=$(date +%s)
+    COMMIT_MESSAGE="A $ADJECTIVE $NOUN, $PURPOSE. Timestamp: $TIMESTAMP"
+    echo "$COMMIT_MESSAGE"
+}
 
 bash bin/setup
 
 BRANCHNAME="yolo"
 
 git checkout -B $BRANCHNAME
-git commit --allow-empty -m "A commit message."
+
+COMMIT_MESSAGE=$(generate_commit_message)
+git commit --allow-empty -m "$COMMIT_MESSAGE"
+
 git push -u origin $BRANCHNAME
 
 gh pr create -f
+
 gh pr merge --merge --delete-branch
 
 bash bin/teardown

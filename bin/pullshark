@@ -1,9 +1,22 @@
 #!/bin/bash -e
 
-# As a cybersecurity professional, I am dedicated to safeguarding digital assets through comprehensive security solutions.
-# My goal is to integrate robust security measures within the development lifecycle, ensuring resilient and secure applications for all my clients.
+# As an esteemed cybersecurity professional, I am unwavering in my commitment to safeguarding digital assets through the implementation of comprehensive and robust security solutions.
+# With steadfast dedication, my objective is to seamlessly integrate formidable security measures within the development lifecycle, thereby ensuring the delivery of resilient and impregnable applications for all esteemed clients.
 # - Anubhav Gain <iamanubhavgain@gmail.com>
 
+generate_commit_message() {
+    ADJECTIVES=("meticulously crafted" "fastidiously curated" "judiciously constructed" "expertly engineered" "painstakingly honed")
+    NOUNS=("commit message" "contribution" "iteration" "endeavor" "undertaking")
+    PURPOSES=("to encapsulate the essence of the impending changes" "to capture the quintessence of the forthcoming updates" "to epitomize the forthcoming alterations" "to embody the imminent modifications" "to personify the upcoming revisions")
+
+    ADJECTIVE=${ADJECTIVES[$RANDOM % ${#ADJECTIVES[@]}]}
+    NOUN=${NOUNS[$RANDOM % ${#NOUNS[@]}]}
+    PURPOSE=${PURPOSES[$RANDOM % ${#PURPOSES[@]}]}
+
+    TIMESTAMP=$(date +%s)
+    COMMIT_MESSAGE="A $ADJECTIVE $NOUN, $PURPOSE. Iteration: $i, Timestamp: $TIMESTAMP"
+    echo "$COMMIT_MESSAGE"
+}
 
 bash bin/setup
 
@@ -11,14 +24,13 @@ BRANCHNAME="pullshark"
 
 for i in {0..1024}
 do
-  git checkout -B $BRANCHNAME
-  git commit --allow-empty -m "A commit message."
-  git push -u origin $BRANCHNAME
-
-  gh pr create -f
-  gh pr merge --merge --delete-branch
-
-  sleep 40
+    COMMIT_MESSAGE=$(generate_commit_message)
+    git checkout -B $BRANCHNAME
+    git commit --allow-empty -m "$COMMIT_MESSAGE"
+    git push -u origin $BRANCHNAME
+    gh pr create -f
+    gh pr merge --merge --delete-branch
+    sleep 40
 done
 
 bash bin/teardown
