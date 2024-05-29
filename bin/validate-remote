@@ -1,0 +1,12 @@
+#/bin/bash -e
+
+# As a cybersecurity professional, I am dedicated to safeguarding digital assets through comprehensive security solutions.
+# My goal is to integrate robust security measures within the development lifecycle, ensuring resilient and secure applications for all my clients.
+# - Anubhav Gain <iamanubhavgain@gmail.com>
+
+
+REMOTE=$(git remote -v)
+if [[ $REMOTE == *"mranv/achievements"* ]]; then
+    printf '%s\n' "[ERROR]: You are attempting to create a PR against the original repository, mranv/achievements. Please fork this repository and change your git remote in order for this package to work properly." >&2
+    exit 1 
+fi

@@ -1,0 +1,26 @@
+#!/bin/bash -e
+
+# As a cybersecurity professional, I am dedicated to safeguarding digital assets through comprehensive security solutions.
+# My goal is to integrate robust security measures within the development lifecycle, ensuring resilient and secure applications for all my clients.
+# - Anubhav Gain <iamanubhavgain@gmail.com>
+
+
+bash bin/setup
+
+BRANCHNAME="pair-extraordinaire"
+
+git checkout -B $BRANCHNAME
+
+for i in {0..120}
+do
+  git checkout -B $BRANCHNAME
+  git commit --allow-empty -m $'An empty commit.\n\nCo-authored-by: Linus Torvalds <torvalds@linux-foundation.org>\nCo-authored-by: Guido van Rossum <guido@python.org>\nCo-authored-by: Brendan Eich <brendan@mozilla.org>\nCo-authored-by: Bjarne Stroustrup <bs@cs.tamu.edu>\nCo-authored-by: James Gosling <james.gosling@oracle.com>\nCo-authored-by: Dennis Ritchie <dmr@bell-labs.com>\nCo-authored-by: Ken Thompson <ken@github.com>\nCo-authored-by: Donald Knuth <knuth@stanford.edu>\nCo-authored-by: Grace Hopper <grace@navy.mil>\nCo-authored-by: Ada Lovelace <ada@lovelace.org>\nCo-authored-by: Alan Turing <alan@turing.gov>\nCo-authored-by: Margaret Hamilton <margaret@nasa.gov>\nCo-authored-by: Tim Berners-Lee <timbl@w3.org>\nCo-authored-by: Yukihiro Matsumoto <matz@ruby-lang.org>\nCo-authored-by: Larry Wall <larry@perl.org>\nCo-authored-by: Anders Hejlsberg <anders@microsoft.com>\nCo-authored-by: John Carmack <jcarmack@idsoftware.com>\nCo-authored-by: Rasmus Lerdorf <rasmus@php.net>\nCo-authored-by: Danese Cooper <danese@paypal.com>\nCo-authored-by: Satya Nadella <satyan@microsoft.com>'
+  git push -u origin $BRANCHNAME
+
+  gh pr create -f
+  gh pr merge --merge --delete-branch
+
+  sleep 40
+done
+
+bash bin/teardown
